@@ -1,0 +1,19 @@
+name: nest
+
+services:
+  container:
+    build: 
+      context: .
+      target: dev
+    container_name: nest-testing-project
+    volumes:
+      - .:/usr/src/app
+      - container_node_modules:/usr/src/app/node_modules
+    ports:
+      - "${SERVERPORT}:${SERVERPORT}"
+    environment:
+      - SERVERPORT=${SERVERPORT}
+    entrypoint: npm run start:dev
+
+volumes:
+  container_node_modules:
