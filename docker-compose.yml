@@ -10,7 +10,7 @@ services:
       - .:/usr/src/app
       - container_node_modules:/usr/src/app/node_modules
     ports:
-      - "${SERVERPORT}:${SERVERPORT}"
+      - "${SERVERPORT}:3000"
     environment:
       - SERVERPORT=${SERVERPORT}
     entrypoint: npm run start:dev
