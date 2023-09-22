@@ -1,19 +1,35 @@
-name: nest
+version: '3.5'
 
 services:
-  container:
-    build: 
-      context: .
-      target: dev
-    container_name: nest-testing-project
-    volumes:
-      - .:/usr/src/app
-      - container_node_modules:/usr/src/app/node_modules
-    ports:
-      - "${SERVERPORT}:3000"
+  postgres:
+    image: postgres:latest
     environment:
-      - SERVERPORT=${SERVERPORT}
-    entrypoint: npm run start:dev
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DB_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
 
 volumes:
-  container_node_modules:
+    postgres:
