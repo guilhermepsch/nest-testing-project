@@ -30,7 +30,7 @@ export class CaracteristicaProdutoDTO {
 export class ImagemProdutoDTO {
   id: string;
 
-  @IsUrl()
+  @IsUrl(null, { message: 'URL para imagem inválida' })
   url: string;
 
   @IsString()
@@ -54,7 +54,7 @@ export class CriaProdutoDTO {
 
   @IsNumber()
   @Min(0, { message: 'Quantidade mínima inválida' })
-  quantidade: number;
+  quantidadeDisponivel: number;
 
   @IsString()
   @IsNotEmpty({ message: 'Descrição do produto não pode ser vazia ' })
@@ -65,7 +65,7 @@ export class CriaProdutoDTO {
 
   @ValidateNested()
   @IsArray()
-  @ArrayMinSize(3)
+  @ArrayMinSize(1)
   @Type(() => CaracteristicaProdutoDTO)
   caracteristicas: CaracteristicaProdutoDTO[];
 
