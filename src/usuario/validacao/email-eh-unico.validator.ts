@@ -13,8 +13,9 @@ export class EmailEhUnicoValidator implements ValidatorConstraintInterface {
   constructor(private usuarioService: UsuarioService) {}
 
   async validate(value: any): Promise<boolean> {
-    const usuarioComEmailExiste =
-      await this.usuarioService.buscaPorEmail(value);
+    const usuarioComEmailExiste = await this.usuarioService.buscaPorEmail(
+      value,
+    );
     return !usuarioComEmailExiste;
   }
 }
