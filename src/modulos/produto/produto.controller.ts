@@ -41,6 +41,8 @@ export class ProdutoController {
   async listaUm(@Param('id') id: string) {
     const produtoSalvo = await this.produtoService.listaUmProduto(id);
 
+    console.log('Produto sendo buscado do BD!');
+
     return produtoSalvo;
   }
 
